@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: ["*"]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Cruft
+        uses: threeal/pipx-install-action@v1.0.0
+        with:
+          packages: cruft
+
+      - name: Create project from template
+        run: |
+          cruft create . \
+            -y --extra-context='{"project_slug": "test_project", "use_docker": "y"}'
+
+      - name: Test project
+        run: |
+          cd test_project
+          make test
+          make docker.build
