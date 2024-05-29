@@ -18,6 +18,7 @@ test:
 
 update:
 	go get -u -t ./...
+	go mod tidy
 
 upgrade: update
 	cruft update
