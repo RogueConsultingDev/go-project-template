@@ -26,7 +26,7 @@ clean:
 
 export DOCKER_BUILDKIT ?= 1
 
-DOCKER_REGISTRY ?= 289082777815.dkr.ecr.us-east-2.amazonaws.com
+DOCKER_REGISTRY ?= MiMe.placeholder
 DOCKER_IMAGE    ?= ${PROJECT_NAME}
 DOCKER_CONTEXT  ?= ${PROJECT_ROOT}
 

@@ -5,8 +5,9 @@ on:
     branches: ["*"]
 
 jobs:
-  test-template:
+  validate-template:
     runs-on: ubuntu-latest
+    name: "Validate Project Template"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,6 +25,6 @@ jobs:
       - name: Test project
         run: |
           cd test_project
-          go get .
+          go get -t .
           make test
           make docker.build
