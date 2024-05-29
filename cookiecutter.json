@@ -1,6 +1,9 @@
 {
     "project_slug": "project-example",
     "project_description": "Project description",
-    "go_version": "1.22.3",
-    "use_docker": "y"
+    "project_type": [
+        "application",
+        "library"
+    ],
+    "go_version": "1.22.3"
 }

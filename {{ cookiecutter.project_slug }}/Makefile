@@ -22,7 +22,7 @@ htmlcov: test
 clean:
 	go clean
 
-{%- if cookiecutter.use_docker == "y" %}
+{%- if cookiecutter.project_type == "application" %}
 
 export DOCKER_BUILDKIT ?= 1
 

@@ -8,5 +8,6 @@ def remove(filepath):
     elif os.path.isdir(filepath):
         shutil.rmtree(filepath)
 
-if not "{{ cookiecutter.use_docker }}" == "y":
+if "{{ cookiecutter.project_type }}" != "application":
+    remove("bin")
     remove("Dockerfile")

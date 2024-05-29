@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Cruft
+      - name: Install dependencies
         uses: threeal/pipx-install-action@v1.0.0
         with:
           packages: cruft pre-commit
@@ -20,7 +20,7 @@ jobs:
       - name: Create project from template
         run: |
           cruft create . \
-            -y --extra-context='{"project_slug": "test_project", "use_docker": "y"}'
+            -y --extra-context='{"project_slug": "test_project", "project_type": "application"}'
 
       - name: Configure Git
         run: |

@@ -31,7 +31,7 @@ RUN --mount=type=cache,target=/var/cache/apk \
 USER nobody
 
 # Copy the executable from the "build" stage.
-COPY --from=build /usr/local/bin/{{ cookiecutter.project_slug }} /usr/local/bin
+COPY --from=build /usr/local/bin/{{ cookiecutter.project_slug }} /usr/local/bin/
 COPY bin/* /usr/local/bin/
 
 EXPOSE 8080
