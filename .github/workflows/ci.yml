@@ -33,7 +33,7 @@ jobs:
           git init
           git add .
           # pre-commit install
-          git ci -m 'Initial Commit'
+          git commit -m 'Initial Commit'
 
           make test
           make docker.build
