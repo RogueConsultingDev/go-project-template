@@ -37,7 +37,7 @@ jobs:
 
           git init
           git add .
-          # pre-commit install
+          pre-commit install
           git commit -m 'Initial Commit'
 
           make test
