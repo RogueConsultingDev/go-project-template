@@ -15,7 +15,7 @@ jobs:
       - name: Install Cruft
         uses: threeal/pipx-install-action@v1.0.0
         with:
-          packages: cruft
+          packages: cruft pre-commit
 
       - name: Create project from template
         run: |
