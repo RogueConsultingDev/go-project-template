@@ -2,8 +2,14 @@ ARG GO_VERSION={{ cookiecutter.go_version }}
 FROM --platform=$BUILDPLATFORM golang:${GO_VERSION} AS build
 WORKDIR /src
 
+ENV GOPRIVATE=github.com/RogueConsultingDev
+RUN if [ ! -d ~/.ssh ]; then install -d -m 700 ~/.ssh; fi \
+    && echo 'github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl' >> ~/.ssh/known_hosts \
+    && git config --global url.ssh://git@github.com/RogueConsultingDev/.insteadof https://github.com/RogueConsultingDev/
+
 # Download dependencies as a separate step to take advantage of Docker's caching.
-RUN --mount=type=cache,target=/go/pkg/mod/ \
+RUN --mount=type=ssh \
+    --mount=type=cache,target=/go/pkg/mod/ \
     --mount=type=bind,source=go.sum,target=go.sum \
     --mount=type=bind,source=go.mod,target=go.mod \
     go mod download -x
