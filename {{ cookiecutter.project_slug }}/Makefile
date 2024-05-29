@@ -16,11 +16,17 @@ test:
 	go test -coverprofile=.coverage -tags test ./...
 	@if grep -E '0$$' .coverage; then printf "\\e[31m[ERROR]\\e[0m   Missing test coverage\\n"; exit 1; fi;
 
-htmlcov: test
-	go tool cover -html=.coverage
+update:
+	go get -u -t ./...
+
+upgrade: update
+	cruft update
 
 clean:
 	go clean
+
+htmlcov: test
+	go tool cover -html=.coverage
 
 {%- if cookiecutter.project_type == "application" %}
 
