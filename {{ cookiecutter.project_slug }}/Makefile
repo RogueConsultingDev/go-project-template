@@ -39,8 +39,12 @@ else
 endif
 
 docker.build:
-	# TODO: Inject creds in CI
+ifeq ($(CI),)
 	docker build --ssh default --tag ${DOCKER_REPO}:${DOCKER_TAG} ${DOCKER_CONTEXT}
+else
+	docker build --secret id=GITHUB_TOKEN --tag ${DOCKER_REPO}:${DOCKER_TAG} ${DOCKER_CONTEXT}
+endif
+
 
 docker.echo.tag:
 	@echo ${DOCKER_REPO}:${DOCKER_TAG}

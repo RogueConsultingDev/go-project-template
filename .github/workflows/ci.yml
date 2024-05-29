@@ -23,6 +23,8 @@ jobs:
             -y --extra-context='{"project_slug": "test_project", "use_docker": "y"}'
 
       - name: Test project
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd test_project
           go get -t .
