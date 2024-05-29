@@ -28,8 +28,12 @@ jobs:
         run: |
           cd test_project
 
-          git init
           go get -t .
+
+          git init
+          git add .
+          # pre-commit install
+          git ci -m 'Initial Commit'
 
           make test
           make docker.build
