@@ -22,6 +22,11 @@ jobs:
           cruft create . \
             -y --extra-context='{"project_slug": "test_project", "use_docker": "y"}'
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "CI User"
+          git config --global user.email "ci@example.com"
+
       - name: Test project
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
