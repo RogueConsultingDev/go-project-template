@@ -20,8 +20,7 @@ update:
 	go get -u -t ./...
 	go mod tidy
 
-upgrade: update
-	cruft update
+upgrade: cruft.update update
 
 clean:
 	go clean
@@ -60,3 +59,6 @@ docker.push:
 	docker push ${DOCKER_REPO}:${DOCKER_TAG}
 
 {%- endif %}
+
+cruft.update:
+	cruft update
