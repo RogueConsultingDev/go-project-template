@@ -9,14 +9,14 @@ on:
 permissions:  # For golangci-lint
   contents: read
 
-{% raw -%}
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+{%- raw %}
       - uses: actions/checkout@v4
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.cache/go-build
@@ -25,7 +25,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-v0-
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.cache/pre-commit
@@ -46,6 +46,13 @@ jobs:
         run: |
           go install golang.org/x/tools/cmd/goimports@latest
 
+      - name: Setup Git Token Auth
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: |
+          echo "GOPRIVATE=github.com/RogueConsultingDev" >> $GITHUB_ENV
+          git config --global "url.https://mathieu-lemay:${{ secrets.ACCESS_TOKEN }}@github.com/RogueConsultingDev/.insteadof" https://github.com/RogueConsultingDev/ \
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
         with:
@@ -57,3 +64,12 @@ jobs:
       - name: Run Tests
         run: make test
 {% endraw -%}
+
+{%- if cookiecutter.project_type == "application" %}
+{%- raw %}
+      - name: Build image
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: make docker.build
+{% endraw -%}
+{% endif -%}

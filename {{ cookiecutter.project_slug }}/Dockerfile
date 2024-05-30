@@ -3,9 +3,14 @@ FROM --platform=$BUILDPLATFORM golang:${GO_VERSION} AS build
 WORKDIR /src
 
 ENV GOPRIVATE=github.com/RogueConsultingDev
-RUN if [ ! -d ~/.ssh ]; then install -d -m 700 ~/.ssh; fi \
+RUN --mount=type=secret,id=GITHUB_TOKEN \
+    if [ ! -d ~/.ssh ]; then install -d -m 700 ~/.ssh; fi \
     && echo 'github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl' >> ~/.ssh/known_hosts \
-    && git config --global url.ssh://git@github.com/RogueConsultingDev/.insteadof https://github.com/RogueConsultingDev/
+    && if [ -e /run/secrets/GITHUB_TOKEN ]; then \
+        git config --global "url.https://mathieu-lemay:$(cat /run/secrets/GITHUB_TOKEN)@github.com/RogueConsultingDev/.insteadof" https://github.com/RogueConsultingDev/; \
+    else \
+        git config --global url.ssh://git@github.com/RogueConsultingDev/.insteadof https://github.com/RogueConsultingDev/; \
+    fi;
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 RUN --mount=type=ssh \
