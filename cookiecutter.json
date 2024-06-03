@@ -5,5 +5,6 @@
         "application",
         "library"
     ],
+    "github_org": "RogueConsultingDev",
     "go_version": "1.22.3"
 }
