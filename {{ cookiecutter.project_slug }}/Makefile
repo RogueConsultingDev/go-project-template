@@ -6,6 +6,8 @@ SHELL           := /usr/bin/env bash
 PROJECT_ROOT ?= $(shell git rev-parse --show-toplevel)
 PROJECT_NAME ?= {{ cookiecutter.project_slug }}
 
+export GOPRIVATE ?= github.com/{{ cookiecutter.github_org }}
+
 format:
 	go fmt
 
@@ -50,7 +52,6 @@ ifeq ($(CI),)
 else
 	docker build --secret id=GITHUB_TOKEN --tag ${DOCKER_REPO}:${DOCKER_TAG} ${DOCKER_CONTEXT}
 endif
-
 
 docker.echo.tag:
 	@echo ${DOCKER_REPO}:${DOCKER_TAG}
