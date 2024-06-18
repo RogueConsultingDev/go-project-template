@@ -39,7 +39,8 @@ jobs:
         run: |
           cd test_project
 
-          go get -t .
+          # Add indirect deps in go.mod, generate go.sum
+          make get
 
           git init
           git add .

@@ -1,7 +1,7 @@
-MAKEFLAGS += --always-make
-SHELL           := /usr/bin/env bash
-.SHELLFLAGS     := -e -o pipefail -c
-.NOTPARALLEL:
+MAKEFLAGS    += --always-make
+SHELL        := /usr/bin/env bash
+.SHELLFLAGS  := -e -o pipefail -c
+.NOTPARALLEL :
 
 PROJECT_ROOT ?= $(shell git rev-parse --show-toplevel)
 PROJECT_NAME ?= {{ cookiecutter.project_slug }}
@@ -18,11 +18,14 @@ test:
 	go test -coverprofile=.coverage -tags test ./...
 	@if grep -E '0$$' .coverage; then printf "\\e[31m[ERROR]\\e[0m   Missing test coverage\\n"; exit 1; fi;
 
+get:
+	go get -t ./...
+
 update:
 	go get -u -t ./...
 	go mod tidy
 
-upgrade: cruft.update update
+upgrade: _cruft.update update
 
 clean:
 	go clean
@@ -61,5 +64,6 @@ docker.push:
 
 {%- endif %}
 
-cruft.update:
+# Private targets
+_cruft.update:
 	cruft update
