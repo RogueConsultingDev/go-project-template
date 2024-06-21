@@ -31,12 +31,16 @@ cd "${PROJECT_SLUG}"
 # Add indirect deps in go.mod, generate go.sum
 make mod
 
+# Ensure the project builds correctly
+go build .
+
 # Create a first commit to ensure pre-commit works
 git init
 git add .
 pre-commit install
 git commit -m 'Initial Commit'
 
+make lint
 make test
 if [[ -f Dockerfile ]]; then
     make docker.build

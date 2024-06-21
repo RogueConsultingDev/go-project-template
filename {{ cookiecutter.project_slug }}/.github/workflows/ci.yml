@@ -50,8 +50,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
-          echo "GOPRIVATE=github.com/RogueConsultingDev" >> $GITHUB_ENV
-          git config --global "url.https://mathieu-lemay:${{ secrets.ACCESS_TOKEN }}@github.com/RogueConsultingDev/.insteadof" https://github.com/RogueConsultingDev/ \
+          echo "GOPRIVATE=github.com/{{ cookiecutter.github_org }}" >> $GITHUB_ENV
+          git config --global "url.https://mathieu-lemay:${{ secrets.ACCESS_TOKEN }}@github.com/{{ cookiecutter.github_org }}/.insteadof" https://github.com/{{ cookiecutter.github_org }}/ \
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6

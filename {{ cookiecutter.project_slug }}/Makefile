@@ -9,7 +9,8 @@ PROJECT_NAME ?= {{ cookiecutter.project_slug }}
 export GOPRIVATE ?= github.com/{{ cookiecutter.github_org }}
 
 format:
-	go fmt
+	pre-commit run --all-files go-fmt
+	pre-commit run --all-files go-imports
 
 lint:
 	pre-commit run --all-files
