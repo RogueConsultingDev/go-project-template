@@ -17,11 +17,6 @@ jobs:
         with:
           packages: cruft pre-commit
 
-      - name: Create project from template
-        run: |
-          cruft create . \
-            -y --extra-context='{"project_slug": "test_project", "project_type": "application"}'
-
       - name: Configure Git
         run: |
           git config --global user.name "CI User"
@@ -33,19 +28,8 @@ jobs:
           curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -  -b "$(go env GOPATH)/bin" v1.59.0
           echo "PATH=$(go env GOPATH)/bin:$PATH" >> $GITHUB_ENV
 
-      - name: Test project
+      - name: Test template
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cd test_project
-
-          # Add indirect deps in go.mod, generate go.sum
-          make get
-
-          git init
-          git add .
-          pre-commit install
-          git commit -m 'Initial Commit'
-
           make test
-          make docker.build
