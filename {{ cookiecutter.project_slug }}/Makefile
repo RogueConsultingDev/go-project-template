@@ -18,8 +18,8 @@ test:
 	go test -coverprofile=.coverage -tags test ./...
 	@if grep -E '0$$' .coverage; then printf "\\e[31m[ERROR]\\e[0m   Missing test coverage\\n"; exit 1; fi;
 
-get:
-	go get -t ./...
+mod:
+	go mod tidy
 
 update:
 	go get -u -t ./...
